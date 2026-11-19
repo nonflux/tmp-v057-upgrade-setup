@@ -1,0 +1,28 @@
+# fullsend per-repo configuration
+# https://github.com/fullsend-ai/fullsend
+#
+# This file configures fullsend for per-repo installation mode.
+# See https://fullsend.sh/docs/guides/infrastructure/layered-config-reference
+version: "1"
+tracker:
+    github:
+        allowed_targets:
+            repos:
+                - fullsend-ai/fullsend
+                - fullsend-ai/agents
+runtime: claude
+roles:
+    - triage
+    - coder
+    - review
+    - fix
+    - retro
+    - prioritize
+allowed_remote_resources:
+    - https://raw.githubusercontent.com/fullsend-ai/fullsend/
+    - https://raw.githubusercontent.com/fullsend-ai/agents/
+inference:
+    provider: vertex
+    project: fullsend-upgrade-test
+    region: global
+    wif_provider: projects/000000000000/locations/global/workloadIdentityPools/upgrade-test/providers/upgrade-test
