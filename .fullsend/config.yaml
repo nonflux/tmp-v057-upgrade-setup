@@ -26,3 +26,11 @@ inference:
     project: fullsend-upgrade-test
     region: global
     wif_provider: projects/000000000000/locations/global/workloadIdentityPools/upgrade-test/providers/upgrade-test
+agents:
+  - name: review
+    trigger: >-
+      event.transition.kind == "comment_added"
+      && has(event.entity.linked_change_proposal)
+      && has(event.transition.comment.command)
+      && event.transition.comment.command == "/fs-review"
+      && event.actor.kind == "human"
