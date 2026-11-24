@@ -34,6 +34,9 @@ on:
     types: [opened, synchronize, ready_for_review, closed, labeled, unlabeled]
   pull_request_review:
     types: [submitted]
+  workflow_run:
+    workflows: [fullsend-fork-pr]
+    types: [completed]
 
 permissions: {}
 
@@ -46,6 +49,11 @@ jobs:
        || github.event.pull_request.head.repo.id == github.repository_id)
       && (github.event_name != 'issue_comment'
        || startsWith(github.event.comment.body, '/fs-'))
+      && (github.event_name != 'workflow_run'
+       || (github.event.workflow_run.event == 'pull_request'
+        && github.event.workflow_run.conclusion == 'success'
+        && github.event.workflow_run.path == '.github/workflows/fullsend-fork-pr.yaml'
+        && github.event.workflow_run.head_repository.id != github.repository_id))
     permissions:
       actions: write
       id-token: write
@@ -53,7 +61,7 @@ jobs:
       issues: write
       packages: read
       pull-requests: write
-    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@c85fd773067c06d0216e46ac9881f1f7c772d517  # v0.57.0
+    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@4ebcbd484785d88779576f7698f2bf4a4793362b  # fork-pr-workflow-run test
     with:
       event_action: ${{ github.event.action }}
       mint_url: ${{ vars.FULLSEND_MINT_URL }}
