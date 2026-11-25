@@ -61,7 +61,7 @@ jobs:
       issues: write
       packages: read
       pull-requests: write
-    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@aa8ac06c04aa0c30b79a1ae62aba05b66f74eae0  # fork-pr-workflow-run test
+    uses: fullsend-ai/fullsend/.github/workflows/reusable-dispatch.yml@7355499b4c3d1707f2affddbdf3807e57acdcbdb  # fork-pr-workflow-run test
     with:
       event_action: ${{ github.event.action }}
       mint_url: ${{ vars.FULLSEND_MINT_URL }}
